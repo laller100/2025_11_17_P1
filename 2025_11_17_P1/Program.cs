@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _2025_11_17_P1
 {
@@ -10,28 +6,33 @@ namespace _2025_11_17_P1
     {
         static void Main()
         {
-            double a = ReadDouble("adja meg az a értékét: ");
-            double b = ReadDouble("adja meg az b értékét: ");
-            double c = ReadDouble("adja meg az c értékét: ");
+            while (true)
+            {
+                double a = ReadDouble("adja meg az a értékét");
+                double b = ReadDouble("adja meg az b értékét");
+                double c = ReadDouble("adja meg az c értékét");
 
-            double D = b * b - 4 * a * c; // diszkrimináns
+                double D = b * b - 4 * a * c; 
 
-            if (D > 0)
-            {
-                double x1 = (-b + Math.Sqrt(D)) / (2 * a);
-                double x2 = (-b - Math.Sqrt(D)) / (2 * a);
-                Console.WriteLine($"Két valós megoldás: x1 = {x1}, x2 = {x2}");
-            }
-            else if (D == 0)
-            {
-                double x = -b / (2 * a);
-                Console.WriteLine($"Egy valós megoldás: x = {x}");
-            }
-            else
-            {
-                double real = -b / (2 * a);
-                double imag = Math.Sqrt(-D) / (2 * a);
-                Console.WriteLine($"Komplex megoldások: x1 = {real} + {imag}i, x2 = {real} - {imag}i");
+                if (D < 0)
+                {
+                    Console.WriteLine("Hiba: gyök alatt nem lehet negatív szám! Próbáld újra.\n");
+                    continue; 
+                }
+
+                if (D > 0)
+                {
+                    double x1 = (-b + Math.Sqrt(D)) / (2 * a);
+                    double x2 = (-b - Math.Sqrt(D)) / (2 * a);
+                    Console.WriteLine($"Két valós megoldás: x1 = {x1}, x2 = {x2}");
+                }
+                else 
+                {
+                    double x = -b / (2 * a);
+                    Console.WriteLine($"Egy valós megoldás: x = {x}");
+                }
+
+                break; 
             }
         }
 
@@ -42,13 +43,26 @@ namespace _2025_11_17_P1
                 Console.Write($"{name} = ");
                 string input = Console.ReadLine();
 
-                if (double.TryParse(input, out double value))
+                try
                 {
-                    return value;
+                    double value = Convert.ToDouble(input);
+
+                    if (value < 0)
+                    {
+                        Console.WriteLine("Hiba: a szám nem lehet negatív! Próbáld újra.");
+                    }
+                    else if (value == 0)
+                    {
+                        Console.WriteLine("Hiba: nulla nem lehet benne! Próbáld újra.");
+                    }
+                    else
+                    {
+                        return value;
+                    }
                 }
-                else
+                catch
                 {
-                    Console.WriteLine("Hiba: számot adj meg!");
+                    Console.WriteLine("Hiba: érvénytelen szám! Próbáld újra.");
                 }
             }
         }
